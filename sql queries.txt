@@ -1,0 +1,64 @@
+create database details;
+use details;
+create table if not exists employee_details(id int not null unique,name varchar(50),age int);
+select * from employee_details;
+insert into employee_details values(1,"Balaji",23);
+insert into employee_details values(2,"Hari",25);
+insert into employee_details values(3,"Denny",23);
+insert into employee_details values(4,"Vicky",24);
+insert into employee_details values(5,"Loki",24);
+insert into employee_details values(6,"Bharath",25);
+alter table employee_details drop column doj;
+alter table employee_details add doj date;
+
+-- insert into employee_details(id,name,age,doj) values (1,"Balaji",23,"2024-08-16");
+update employee_details set doj="2022-08-16" where id=1;
+update employee_details set doj="2022-06-01" where id=2;
+update employee_details set doj="2022-08-16" where id=3;
+update employee_details set doj="2021-08-20" where id=4;
+update employee_details set doj="2021-12-08" where id=5 or id=6;
+update employee_details set age="26" where id=6;
+
+alter table employee_details modify column id int;
+alter table employee_details add primary key(id);
+delete from employee_details where id=2;
+truncate table employee_details;
+select distinct age from employee_details order by age desc;
+select * from employee_details limit 2;
+select * from employee_details where age not in (25);
+select * from employee_details where age in (24,26) order by id desc;
+
+-- aggregate functions-- 
+
+select count(name) from employee_details;
+select max(age) from employee_details;
+select min(age) from employee_details;
+select avg(id) from employee_details;
+select sum(id) from employee_details;
+select doj,max(age) from employee_details group by 1 having max(age)>23;
+
+select * from employee_details where age between 23 and 25;
+select name,age,doj as date_of_joining from employee_details;
+select * from employee_details where name like "ba%";
+
+create table if not exists employee_attendance(id int primary key,present float,absent float);
+use details;
+select * from employee_attendance;
+
+insert into employee_attendance values(1,29,1);
+insert into employee_attendance values(2,22,8);
+insert into employee_attendance values(3,30,0);
+insert into employee_attendance values(4,26,4);
+insert into employee_attendance values(5,27,3);
+insert into employee_attendance values(6,26,4);
+delete from employee_attendance where id=6;
+
+select ed.id,ed.name,ea.present,ea.absent from employee_details ed cross join employee_attendance ea;
+-- drop table employee_attendance;-- 
+create table a(id int primary key,name varchar(50));
+-- insert into a values(1,"Balaji");
+-- insert into a values(2,"Hari");
+-- create table b(id int,name varchar(50),foreign key(id) references a(id));
+-- insert into b values(1,"Balaji N");
+-- insert into b values(2,"Hariharan");
+
