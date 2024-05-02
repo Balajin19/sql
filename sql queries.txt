@@ -62,3 +62,18 @@ create table a(id int primary key,name varchar(50));
 -- insert into b values(1,"Balaji N");
 -- insert into b values(2,"Hariharan");
 
+-- TCL COMMANDS
+
+CREATE TABLE list (id INT NOT NULL,name VARCHAR(50));
+start transaction;
+INSERT INTO list VALUES (1, 'Balaji'), (2, 'hari'), (3, 'denny');
+
+
+
+INSERT INTO list VALUES (4, 'vicky');
+SAVEPOINT A;
+ROLLBACK TO savepoint A;
+commit;
+delete from list where name="vicky";
+SELECT * FROM list; 
+
